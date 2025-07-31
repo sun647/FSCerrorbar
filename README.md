@@ -25,6 +25,7 @@ By allowing you to set the sigma value, this app gives you flexible control over
 **Example FSC error bar for EMPIAR 10084 Cryo-EM structure of haemoglobin at 3.2 Å determined with the Volta phase plate**
 ![example FSC error bar](example.png)
 
+[Link to the web app](https://fscerrorbar-bpamnw2rerqekapp5veeddq.streamlit.app/)
 
 > **Note:** If your half map files are larger than 200 MB, please download `calcFSC.py` and run it locally on your computer. There is no size limit when using the script locally.
 
