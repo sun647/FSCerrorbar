@@ -69,6 +69,9 @@ st.markdown("""
 """)
 
 st.markdown("""
+Note: If your half map files are larger than 200 MB, please download `calcFSC.py` from [my Github repository](https://github.com/sun647/FSCerrorbar/tree/main) and run it locally on your computer. There is no size limit when using the script locally.
+""")
+st.markdown("""
 To learn more:
 
 - [Penczek PA (2010)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3165049/): *Resolution measures in molecular electron microscopy*.  
