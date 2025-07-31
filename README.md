@@ -1,5 +1,4 @@
 # FSC Error Bar Calculator
-# FSC Error Bar Calculator
  
 **About This FSC Confidence Estimation Web App**  
 Fourier Shell Correlation (FSC) is the standard method used in the cryo-electron microscopy (cryo-EM) field to estimate the resolution of reconstructed 3D maps, serving as a key indicator of overall map quality. FSC is computed as the cross-correlation coefficient between two independently reconstructed “half maps” as a function of spatial frequency. At each resolution shell, FSC quantifies how well the two maps agree, with higher values indicating better reproducibility and signal.  
