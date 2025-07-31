@@ -2,3 +2,6 @@ streamlit
 numpy
 matplotlib
 mrcfile
+os
+tempfile
+pandas
