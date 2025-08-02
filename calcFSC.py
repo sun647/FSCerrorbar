@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Aug  1 21:18:45 2025
+
+@author: csun
+"""
+
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
@@ -33,7 +41,14 @@ def plot_fsc(x, fsc, y1, y3, method):
     ax.plot(x, fsc, '-b', label="FSC")
     ax.plot(x, y3, '--r', label="Upper limit")
     ax.plot(x, y1, '--k', label="Lower limit")
-    ax.set_xlabel("Shell Index")
+    xmax = max(x)
+    xstep = max(round(xmax / 5 / 2, 2) * 2, 0.01)  # nice rounding
+    xticks = [xstep * i for i in range(int(xmax / xstep) + 1)]
+    xlabels = [r"1/$\infty$"] + ["1/%.1f" % (1 / xt) for xt in xticks[1:]]
+    ax.set_xticks(xticks)
+    ax.set_xticklabels(xlabels)
+    ax.axhline(y=0.143, linestyle='--', color='gray', linewidth=1, label="FSC = 0.143")
+    ax.set_xlabel("Spatial Frequency (1/Å)")
     ax.set_ylabel("FSC")
     ax.set_title(f"FSC with Confidence Interval ({method})")
     ax.legend()
@@ -136,7 +151,7 @@ if run_button and file1 and file2:
     try:
         imageData1, _, apix = get_3d_map_from_uploaded_file(file1)
         imageData2, _, _ = get_3d_map_from_uploaded_file(file2)
-
+        #print (apix)
         if imageData1.shape != imageData2.shape:
             st.error("MRC volumes must have the same shape.")
         elif len(imageData1.shape) != 3:
@@ -147,7 +162,8 @@ if run_button and file1 and file2:
 
             box_half = model_1.shape[0] // 2
             fsc_list, y1, y3 = [], [], []
-
+            box_size = model_1.shape[0]  # assume cubic volume
+            x_vals=[]
             for i in range(1, box_half):
                 a, b, c = model_1.shape[0]//2, model_1.shape[1]//2, model_1.shape[2]//2
                 x, y, z = np.ogrid[-a:model_1.shape[0]-a, -b:model_1.shape[1]-b, -c:model_1.shape[2]-c]
@@ -189,13 +205,13 @@ if run_button and file1 and file2:
                     ub = fsc_val + sigma * np.sqrt(var)
 
                 y1.append(lb)
-                y3.append(ub)
-
-            x_vals = list(range(len(fsc_list)))
+                y3.append(min(ub,1))
+                frequency = i / (box_size * apix)  # spatial frequency in 1/Å
+                x_vals.append(frequency)
             plot_fsc(x_vals, fsc_list, y1, y3, method)
 
             df = pd.DataFrame({
-                "Shell Index": x_vals,
+                "Spatical Frequency (1/Å)": x_vals,
                 "FSC": fsc_list,
                 "Lower Limit": y1,
                 "Upper Limit": y3
