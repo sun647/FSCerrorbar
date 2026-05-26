@@ -223,3 +223,11 @@ if run_button and file1 and file2:
 
     except Exception as e:
         st.error(f"Error processing files: {e}")
+        # --- Footer ---
+st.markdown("---")
+st.markdown(
+    "<div style='text-align: center; color: gray; font-size: 13px;'>"
+    "Developed by <b>Chen Sun</b> · Purdue University"
+    "</div>",
+    unsafe_allow_html=True
+)
